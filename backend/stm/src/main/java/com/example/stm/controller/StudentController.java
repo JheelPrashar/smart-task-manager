@@ -12,14 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.example.stm.service.StudentService;
 
 @RestController
 @RequestMapping("/students")
 @CrossOrigin(origins="http://localhost:5173")
 public class StudentController {
+    
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private StudentService service;
     
     @GetMapping
     public ArrayList<Student> getStudent(){
@@ -47,9 +49,12 @@ public class StudentController {
     
     @GetMapping("/count")
     public int countStudents(){
-        String sql="SELECT COUNT(*) FROM students";
-        
-        return jdbcTemplate.queryForObject(sql,Integer.class);
+        return service.getStudentCount();
+    }
+
+    @GetMapping("/message")
+    public String getMessage(){
+        return service.getStudentInfo();
     }
     
 }
