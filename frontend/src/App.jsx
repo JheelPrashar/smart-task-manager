@@ -1,72 +1,71 @@
 import { useState } from "react";
 
 function App() {
-
   const [students, setStudents] = useState([]);
   const [count, setCount] = useState(0);
-  const[name,setName]=useState("");
-  const[course,setCourse]=useState("");
+  const [name, setName] = useState("");
+  const [course, setCourse] = useState("");
 
   const getStudents = async () => {
-
-    const response = await fetch(
-   "http://localhost:8080/students" );
+    const response = await fetch("http://localhost:8080/students");
     const data = await response.json();
     setStudents(data);
   };
   const getBcaStudents = async () => {
-
-    const response = await fetch(
-   "http://localhost:8080/students/bca" );
+    const response = await fetch("http://localhost:8080/students/bca");
     const data = await response.json();
     setStudents(data);
   };
-  const fetchTotalStudentsCount= async () => {
-
-    const response = await fetch(
-   "http://localhost:8080/students/count" );
+  const fetchTotalStudentsCount = async () => {
+    const response = await fetch("http://localhost:8080/students/count");
     const data = await response.json();
     setCount(data);
   };
-  const addStudent= async () => {            
-    const response = await fetch(
-   "http://localhost:8080/students",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({name,course})
-   });
-   if(response.ok){
-    alert("Student registration successful");
-   }else{
-    alert("Failed to register student");
-   }
+  const addStudent = async () => {
+    const response = await fetch("http://localhost:8080/students", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, course }),
+    });
+    if (response.ok) {
+      alert("Student registration successful");
+    } else {
+      alert("Failed to register student");
+    }
   };
-  
 
   return (
     <div>
-      <button onClick={getStudents}>
-        Get Student
-      </button>
-      <button onClick={getBcaStudents}>
-        show bca student
-      </button>
+      <button onClick={getStudents}>Get Student</button>
+      <button onClick={getBcaStudents}>show bca student</button>
       <ul>
-        {students.map(student=>(
+        {students.map((student) => (
           <li key={student.id}>
             {student.name} - {student.course}
           </li>
         ))}
       </ul>
-      <button onClick={fetchTotalStudentsCount}> Get total student count</button>
+      <button onClick={fetchTotalStudentsCount}>
+        {" "}
+        Get total student count
+      </button>
       <p>Total students:{count}</p>
       <h1>Student Registratio form</h1>
-      <input type="text"placeholder="Name"value={name} onChange={(e)=>setName(e.target.value)}></input>
-      <input type="text"placeholder="Course" value={course} onChange={(e)=>setCourse(e.target.value)}></input>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      ></input>
+      <input
+        type="text"
+        placeholder="Course"
+        value={course}
+        onChange={(e) => setCourse(e.target.value)}
+      ></input>
       <button onClick={addStudent}>Register</button>
-          
     </div>
   );
 }
