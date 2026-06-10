@@ -4,6 +4,8 @@ function App() {
 
   const [students, setStudents] = useState([]);
   const [count, setCount] = useState(0);
+  const[name,setName]=useState("");
+  const[course,setCourse]=useState("");
 
   const getStudents = async () => {
 
@@ -26,6 +28,21 @@ function App() {
     const data = await response.json();
     setCount(data);
   };
+  const addStudent= async () => {            
+    const response = await fetch(
+   "http://localhost:8080/students",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({name,course})
+   });
+   if(response.ok){
+    alert("Student registration successful");
+   }else{
+    alert("Failed to register student");
+   }
+  };
   
 
   return (
@@ -45,6 +62,10 @@ function App() {
       </ul>
       <button onClick={fetchTotalStudentsCount}> Get total student count</button>
       <p>Total students:{count}</p>
+      <h1>Student Registratio form</h1>
+      <input type="text"placeholder="Name"value={name} onChange={(e)=>setName(e.target.value)}></input>
+      <input type="text"placeholder="Course" value={course} onChange={(e)=>setCourse(e.target.value)}></input>
+      <button onClick={addStudent}>Register</button>
           
     </div>
   );
