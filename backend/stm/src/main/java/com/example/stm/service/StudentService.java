@@ -8,6 +8,10 @@ import com.example.stm.model.Student;
 import com.example.stm.repository.StudentRepository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.example.stm.dto.StudentRequestDTO;
+import com.example.stm.exception.StudentNotFindException;
+
 @Service
 public class StudentService {
     public String getStudentInfo(){
@@ -32,4 +36,20 @@ public class StudentService {
     public Student saveStudent(Student student){
         return repository.save(student);
     }
+
+    public Student getStudentById(Integer id){
+        return repository
+        .findById(id)
+        .orElseThrow(()-> new StudentNotFindException("Student not found with id: "+id));
+    }
+
+    public Student addStudent(StudentRequestDTO dto) {
+
+    Student student = new Student();
+    
+    student.setName(dto.getName());
+    student.setCourse(dto.getCourse());
+
+    return repository.save(student);
+}
 }

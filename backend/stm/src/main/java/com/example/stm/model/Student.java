@@ -44,7 +44,7 @@ public class Student {
         return course;
     }
 
-    public void setEmail(String course) {
+    public void setCourse(String course) {
         this.course = course;
     }
 }
