@@ -7,14 +7,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -86,6 +89,16 @@ public class StudentController {
         Student student= service.addStudent(dto);
         return ResponseEntity.ok(student);
      }
+     @PutMapping("/{id}")
+     public ResponseEntity<?>  updateStudent(@PathVariable Integer id,@RequestBody StudentRequestDTO dto){
+        Student student =service.updateStudent(id,dto);
+        return ResponseEntity.ok(student);
+     }
 
+
+     @DeleteMapping("/{id}")
+     public ResponseEntity<?> deleteStudent(@PathVariable Integer id){
+        return ResponseEntity.ok(Map.of("message",service.deleteStudent(id)));
+     }
 }
 
