@@ -5,6 +5,8 @@ function App() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
   const getStudents = async () => {
     const response = await fetch("http://localhost:8080/students");
@@ -36,6 +38,26 @@ function App() {
     }
   };
 
+  const login = async () => {
+    const response = await fetch(
+      "http://localhost:8080/auth/login",
+
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      },
+    );
+    alert("Login Success");
+  };
+
   return (
     <div>
       <button onClick={getStudents}>Get Student</button>
@@ -52,20 +74,34 @@ function App() {
         Get total student count
       </button>
       <p>Total students:{count}</p>
-      <h1>Student Registratio form</h1>
+      <h1>Student Registration form</h1>
       <input
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-      ></input>
+      />
       <input
         type="text"
         placeholder="Course"
         value={course}
         onChange={(e) => setCourse(e.target.value)}
-      ></input>
+      />
       <button onClick={addStudent}>Register</button>
+
+      <input
+        placeholder="Enter username"
+        value={username}
+        onChange={(e) => setUserName(e.target.value)}
+      />
+
+      <input
+        placeholder="Enter Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button onClick={login}>Login</button>
     </div>
   );
 }
