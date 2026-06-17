@@ -1,6 +1,9 @@
 import { useState } from "react";
 
 function App() {
+  const loginWithGoogle = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  };
   const [students, setStudents] = useState([]);
   const [count, setCount] = useState(0);
   const [name, setName] = useState("");
@@ -102,6 +105,10 @@ function App() {
       />
 
       <button onClick={login}>Login</button>
+
+      <h1>Student Management System</h1>
+
+      <button onClick={loginWithGoogle}>Login with Google</button>
     </div>
   );
 }

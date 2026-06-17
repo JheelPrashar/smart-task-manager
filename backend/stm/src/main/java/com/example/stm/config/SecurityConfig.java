@@ -19,9 +19,18 @@ public class SecurityConfig {
         .anyRequest()
         .authenticated()
     )
+    
     .addFilterBefore(
         jwtFilter,UsernamePasswordAuthenticationFilter.class
-    );
+    )
+    
+    .oauth2Login(
+            oauth -> oauth
+                    .defaultSuccessUrl(
+                            "/auth/google-success",
+                            true
+                    )
+                );
     return http.build();
     }
     
